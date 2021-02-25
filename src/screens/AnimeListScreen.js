@@ -36,7 +36,7 @@ const AnimeListScreen = () => {
   const {loading, error, data, fetchMore} = useQuery(
     AnilistService.QUERY_POPULAR_ANIME_LIST,
     {
-      variables: {page: 1},
+      variables: {page: 1, perPage: 10},
     },
   );
   if (loading)

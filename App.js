@@ -18,7 +18,17 @@ const Stack = createStackNavigator();
 
 const client = new ApolloClient({
   uri: 'https://graphql.anilist.co',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Page: {
+        fields: {
+          media: {
+            merge: false,
+          },
+        },
+      },
+    },
+  }),
 });
 
 const App = () => {
