@@ -1,9 +1,9 @@
 import React from 'react';
-import {TouchableOpacity, View, Text, StyleSheet, Image} from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native';
 
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const HomeAnimeItem = ({id, title, image}) => {
+const HomeAnimeItem = ({ id, title, image }) => {
   const navigation = useNavigation();
 
   return (
@@ -15,7 +15,7 @@ const HomeAnimeItem = ({id, title, image}) => {
           title: title,
         });
       }}>
-      <Image source={{uri: image}} style={styles.itemImg} />
+      <Image source={{ uri: image }} style={styles.itemImg} />
       <View
         style={{
           width: 100,
@@ -40,7 +40,7 @@ const HomeAnimeItem = ({id, title, image}) => {
 
 const styles = StyleSheet.create({
   itemImg: {
-    height: 150,
+    height: 130,
     width: 100,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

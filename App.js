@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './src/screens/HomeScreen';
 import AnimeListScreen from './src/screens/AnimeListScreen';
 import SeasonalAnimesScreen from './src/screens/SeasonalAnimesScreen';
@@ -9,10 +9,10 @@ import AccountSetupScreen from './src/screens/AccountSetup/AccountSetupScreen';
 import LoginScreen from './src/screens/AccountSetup/LoginScreen';
 import SignupScreen from './src/screens/AccountSetup/SignupScreen';
 import AnimeInfoScreen from './src/screens/AnimeInfoScreen';
-import {ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import * as eva from '@eva-design/eva';
-import {ApplicationProvider} from '@ui-kitten/components';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { ApplicationProvider } from '@ui-kitten/components';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -21,11 +21,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       Page: {
-        fields: {
-          media: {
-            merge: false,
-          },
-        },
+        // If one of the keyFields is an object with fields of its own, you can
+        // include those nested keyFields by using a nested array of strings:
+        keyFields: ['pageInfo', ['currentPage']],
       },
     },
   }),
@@ -34,34 +32,34 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <ApplicationProvider {...eva} theme={eva.light}>
+      <ApplicationProvider {...eva} theme={eva.dark}>
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator headerMode="none">
               <Stack.Screen
                 name="Home"
                 component={HomeScreen}
-                options={{title: 'My home'}}
+                options={{ title: 'My home' }}
               />
               <Stack.Screen
                 name="AccountSetup"
                 component={AccountSetupScreen}
-                options={{title: 'Account'}}
+                options={{ title: 'Account' }}
               />
               <Stack.Screen
                 name="Login"
                 component={LoginScreen}
-                options={{title: 'Login'}}
+                options={{ title: 'Login' }}
               />
               <Stack.Screen
                 name="Signup"
                 component={SignupScreen}
-                options={{title: 'Signup'}}
+                options={{ title: 'Signup' }}
               />
               <Stack.Screen
                 name="AnimeList"
                 component={AnimeListScreen}
-                options={{title: 'Popular Anime'}}
+                options={{ title: 'Popular Anime' }}
               />
               <Stack.Screen
                 name="SingleAnimeInfo"

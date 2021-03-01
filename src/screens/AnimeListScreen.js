@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  SafeAreaView,
   TouchableOpacity,
   FlatList,
   View,
@@ -8,12 +7,14 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import AnilistService from '../services/anilist';
 import AnimeItemList from './AnimeItemList';
-import {Colors} from '../defaults';
-import {useQuery} from '@apollo/client';
-import {Spinner, Button, Text, Layout} from '@ui-kitten/components';
+import { Colors } from '../defaults';
+import { useQuery } from '@apollo/client';
+import { Spinner, Button, Text, Layout } from '@ui-kitten/components';
+
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AnimeListScreen = () => {
   const navigation = useNavigation();
@@ -33,10 +34,10 @@ const AnimeListScreen = () => {
     }
   }, data);
 
-  const {loading, error, data, fetchMore} = useQuery(
+  const { loading, error, data, fetchMore } = useQuery(
     AnilistService.QUERY_POPULAR_ANIME_LIST,
     {
-      variables: {page: 1, perPage: 10},
+      variables: { page: 1, perPage: 10 },
     },
   );
   if (loading)
@@ -48,59 +49,63 @@ const AnimeListScreen = () => {
   if (error) return <Text>Error...</Text>;
 
   return (
-    <Layout level="1">
-      <Button style={styles.button} onPress={() => navigation.navigate('Home')}>
-        Go Home
-      </Button>
-      <Layout level="1" style={{marginBottom: 100, marginTop: 20}}>
-        {animeList.length != 0 ? (
-          <FlatList
-            data={animeList}
-            renderItem={({item}) => (
-              <AnimeItemList
-                id={item.id}
-                title={item.title.english}
-                image={item.coverImage.large}
-              />
-            )}
-            keyExtractor={(item) => item.id.toString()}
-            onMomentumScrollBegin={() => {
-              setOnEndReachedCalledDuringMomentum(false);
-            }}
-            onEndReached={() => {
-              if (!onEndReachedCalledDuringMomentum) {
-                SetLoadingMoreData(true);
-                console.log('more');
-                fetchMore({
-                  variables: {
-                    page: currentPage + 1,
-                  },
-                })
-                  .then((result) => {
-                    SetLoadingMoreData(false);
-                    setAnimeList(animeList.concat(result.data.Page.media));
-                    setCurrentPage(currentPage + 1);
-                    setOnEndReachedCalledDuringMomentum(true);
+    <SafeAreaView>
+      <Layout level="1">
+        <Button
+          style={styles.button}
+          onPress={() => navigation.navigate('Home')}>
+          Go Home
+        </Button>
+        <Layout level="1" style={{ marginBottom: 100, marginTop: 20 }}>
+          {animeList.length != 0 ? (
+            <FlatList
+              data={animeList}
+              renderItem={({ item }) => (
+                <AnimeItemList
+                  id={item.id}
+                  title={item.title.english}
+                  image={item.coverImage.large}
+                />
+              )}
+              keyExtractor={(item) => item.id.toString()}
+              onMomentumScrollBegin={() => {
+                setOnEndReachedCalledDuringMomentum(false);
+              }}
+              onEndReached={() => {
+                if (!onEndReachedCalledDuringMomentum) {
+                  SetLoadingMoreData(true);
+                  console.log('more');
+                  fetchMore({
+                    variables: {
+                      page: currentPage + 1,
+                    },
                   })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }
-            }}
-            onEndReachedThreshold={0.5}
-          />
-        ) : (
-          <View style={styles.loading}>
-            <Spinner />
-          </View>
-        )}
-        {loadingMoreData && (
-          <View style={styles.loading}>
-            <Spinner />
-          </View>
-        )}
+                    .then((result) => {
+                      SetLoadingMoreData(false);
+                      setAnimeList(animeList.concat(result.data.Page.media));
+                      setCurrentPage(currentPage + 1);
+                      setOnEndReachedCalledDuringMomentum(true);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
+              }}
+              onEndReachedThreshold={0.5}
+            />
+          ) : (
+            <View style={styles.loading}>
+              <Spinner />
+            </View>
+          )}
+          {loadingMoreData && (
+            <View style={styles.loading}>
+              <Spinner />
+            </View>
+          )}
+        </Layout>
       </Layout>
-    </Layout>
+    </SafeAreaView>
   );
 };
 

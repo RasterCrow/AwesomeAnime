@@ -17,7 +17,7 @@ const QUERY_TRENDING_ANIME_LIST = gql`
         id
         bannerImage
         coverImage {
-          large
+          extraLarge
         }
         title {
           english
@@ -42,7 +42,7 @@ const QUERY_POPULAR_ANIME_LIST = gql`
         id
         bannerImage
         coverImage {
-          large
+          extraLarge
         }
         title {
           english
@@ -68,7 +68,7 @@ const QUERY_TOP_ANIME_LIST = gql`
         id
         bannerImage
         coverImage {
-          large
+          extraLarge
         }
         title {
           english
@@ -79,6 +79,7 @@ const QUERY_TOP_ANIME_LIST = gql`
   }
 `;
 
+//to add characters, staff
 const GET_ANIME_INFO = gql`
   query($id: Int) {
     # Define which variables will be used in the query (id)
@@ -94,10 +95,16 @@ const GET_ANIME_INFO = gql`
       coverImage {
         extraLarge
       }
+      status
       description
       season
-      status
+      seasonYear
       episodes
+      duration
+      countryOfOrigin
+      genres
+      averageScore
+      meanScore
     }
   }
 `;

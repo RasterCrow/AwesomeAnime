@@ -1,48 +1,135 @@
-import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  FlatList,
-  Button,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ImageBackground,
-} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Image, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import AnilistService from '../services/anilist';
-import {Colors} from '../defaults';
-import {useQuery} from '@apollo/client/';
-import {Layout} from '@ui-kitten/components';
+import { Colors } from '../defaults';
+import { useQuery } from '@apollo/client/';
+import { Text, Layout } from '@ui-kitten/components';
+import GenreTag from '../components/AnimeInfo/GenreTag';
+//import {LinearGradient} from 'react-native-linear-gradient';
 
-const AnimeInfoScreen = ({route}) => {
+const AnimeInfoScreen = ({ route }) => {
   const navigation = useNavigation();
-  const {itemId, title} = route.params;
-  console.log(itemId);
-  const {loading, error, data} = useQuery(AnilistService.GET_ANIME_INFO, {
-    variables: {id: itemId},
+  const { itemId, title } = route.params;
+
+  const { loading, error, data } = useQuery(AnilistService.GET_ANIME_INFO, {
+    variables: { id: itemId },
   });
 
   useEffect(() => {
-    navigation.setOptions({title: title});
+    navigation.setOptions({ title: title });
   }, []);
 
   if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error...</Text>;
+  if (error) {
+    console.log(error);
+    return <Text>Error...</Text>;
+  }
   console.log(data);
-  console.log(data.Media.coverImage.large);
   return (
-    <Layout level="1" style={{flex: 1}}>
-      <Image
-        style={{width: '100%', height: '40%', resizeMode: 'contain'}}
-        source={{uri: data.Media.coverImage.extraLarge}}
-      />
-      <SafeAreaView style={{marginBottom: 50, marginTop: 20}}>
-        <Text style={styles.itemText}>{data.Media.title.english}</Text>
-        <Text style={styles.itemText}>{data.Media.description}</Text>
-      </SafeAreaView>
-    </Layout>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Layout level="1">
+        <ScrollView style={{ marginHorizontal: 0 }}>
+          {/* Background Header image */}
+          <Image
+            blurRadius={1}
+            style={{
+              position: 'absolute',
+              opacity: 0.4,
+              width: '100%',
+              height: 210,
+              resizeMode: 'cover',
+              justifyContent: 'flex-start',
+            }}
+            source={{ uri: data.Media.coverImage.extraLarge }}
+          />
+
+          {/* Header */}
+          <Layout
+            style={{
+              flexDirection: 'row',
+              height: 200,
+              width: '100%',
+              backgroundColor: 'transparent',
+              paddingTop: 25,
+            }}>
+            <Image
+              style={{
+                width: '42%',
+                maxHeight: '100%',
+                minHeight: '80%',
+                resizeMode: 'contain',
+                borderRadius: 5,
+              }}
+              source={{ uri: data.Media.coverImage.extraLarge }}
+            />
+            <Layout
+              style={{
+                flexDirection: 'column',
+                height: '100%',
+                width: '58%',
+                backgroundColor: 'transparent',
+              }}>
+              <Text
+                style={{
+                  padding: 10,
+                  fontWeight: 'bold',
+                  fontSize: 17,
+                }}>
+                {data.Media.title.english}
+              </Text>
+              <Layout
+                style={{
+                  flexDirection: 'row',
+                  height: 10,
+                  alignItems: 'center',
+                  width: '100%',
+                  marginLeft: 10,
+                  backgroundColor: 'transparent',
+                }}>
+                <Text style={{}}>
+                  {data.Media.seasonYear} -{' '}
+                  {String(data.Media.status).charAt(0) +
+                    String(data.Media.status).substring(1).toLowerCase()}
+                </Text>
+              </Layout>
+            </Layout>
+          </Layout>
+
+          {/* Body */}
+          <Layout style={{ marginTop: 30, paddingLeft: 5, paddingRight: 5 }}>
+            {/* Description */}
+            <Text
+              style={{
+                borderWidth: 1,
+                padding: 10,
+                borderRadius: 10,
+                borderColor: 'rgba(0,0,0,0.2)',
+              }}>
+              {/* String(data.Media.description).split('<br>')[0] */}
+              {data.Media.description}
+            </Text>
+            {/* Tags List */}
+            <Layout
+              style={{
+                marginTop: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                minWidth: '100%',
+                height: 36,
+                alignItems: 'center',
+              }}>
+              <ScrollView horizontal={true}>
+                {data.Media.genres.map((item) => {
+                  return <GenreTag key={item} genre={item} />;
+                })}
+              </ScrollView>
+            </Layout>
+          </Layout>
+        </ScrollView>
+      </Layout>
+    </SafeAreaView>
   );
 };
 
