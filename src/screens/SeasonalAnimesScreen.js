@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -8,12 +8,10 @@ import {
   View,
   StyleSheet,
   Image,
-  Dimensions,
-  ImageBackground,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import AnilistService from "../services/anilist";
-import { Colors } from "../defaults";
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import AnilistService from '../services/anilist';
+import { Colors } from '../defaults';
 
 function Item({ id, title, image }) {
   return (
@@ -22,13 +20,12 @@ function Item({ id, title, image }) {
         <Image source={{ uri: image }} style={styles.itemImg} />
         <View
           style={{
-            backgroundColor: "black",
+            backgroundColor: 'black',
             marginTop: -30,
             height: 50,
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ textAlign: "center", color: Colors.white }}>
+            justifyContent: 'center',
+          }}>
+          <Text style={{ textAlign: 'center', color: Colors.white }}>
             {title}
           </Text>
         </View>
@@ -44,7 +41,7 @@ const SeasonalAnimesScreen = () => {
 
   const hook = () => {
     AnilistService.getAnimeList().then((data) => {
-      console.log("Loaded anime list");
+      console.log('Loaded anime list');
       setAnimeList([].concat(data));
       setLoadedImages(true);
     });
@@ -56,13 +53,12 @@ const SeasonalAnimesScreen = () => {
     <View style={styles.page}>
       <View
         style={{
-          justifyContent: "center",
-          flexDirection: "row-reverse",
-        }}
-      >
+          justifyContent: 'center',
+          flexDirection: 'row-reverse',
+        }}>
         <Button
           color={Colors.red}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate('Home')}
           title="Home"
           style={{
             width: 50,
@@ -71,12 +67,11 @@ const SeasonalAnimesScreen = () => {
         />
         <Text
           style={{
-            textAlign: "center",
+            textAlign: 'center',
             flex: 1,
-            textAlignVertical: "center",
+            textAlignVertical: 'center',
             fontSize: 30,
-          }}
-        >
+          }}>
           Anime List
         </Text>
       </View>
@@ -94,20 +89,19 @@ const SeasonalAnimesScreen = () => {
       {!loadedImages ? (
         <View
           style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
             flex: 1,
-            alignItems: "center",
-          }}
-        >
+            alignItems: 'center',
+          }}>
           <Image
-            source={require("../images/loading.gif")}
+            source={require('../images/loading.gif')}
             style={{
               flex: 1,
               height: 100,
               width: 100,
-              justifyContent: "center",
+              justifyContent: 'center',
             }}
             resizeMode="contain"
           />
@@ -120,24 +114,24 @@ const SeasonalAnimesScreen = () => {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: "rgb(145, 67, 204)",
-    width: "100%",
-    height: "100%",
+    backgroundColor: 'rgb(145, 67, 204)',
+    width: '100%',
+    height: '100%',
   },
   itemImg: {
     borderRadius: 10,
     flex: 2,
   },
   itemText: {
-    fontFamily: "Roboto-Regular",
-    fontWeight: "bold",
+    fontFamily: 'Roboto-Regular',
+    fontWeight: 'bold',
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
   },
   container: {
     height: 200,
     width: 120,
-    margin: "5%",
+    margin: '5%',
     flex: 1,
   },
 });

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, FlatList, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  Button,
+  Text,
+  ActivityIndicator,
+  View,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../defaults';
-import { Layout, Button, Text, Spinner } from '@ui-kitten/components';
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/';
 import AnilistService from '../services/anilist';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeAnimeItem from '../components/Home/HomeAnimeItem';
@@ -36,12 +43,11 @@ const HomeScreen = () => {
   return (
     <SafeAreaView>
       <ScrollView style={{ marginHorizontal: 0 }}>
-        <Layout level="3" style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           {
             //Main Banner
           }
-          <Layout
-            level="2"
+          <View
             style={{
               height: 150,
               justifyContent: 'center',
@@ -49,13 +55,12 @@ const HomeScreen = () => {
               marginBottom: 25,
             }}>
             <Text>Welcome to anilist</Text>
-          </Layout>
+          </View>
 
           {
             //Trending Anime
           }
-          <Layout
-            level="2"
+          <View
             style={{
               height: 230,
               marginBottom: 25,
@@ -66,14 +71,14 @@ const HomeScreen = () => {
               Trending Animes
             </Text>
             {trendingLoading ? (
-              <Layout
+              <View
                 style={{
                   flex: 1,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Spinner />
-              </Layout>
+                <ActivityIndicator />
+              </View>
             ) : trendingError ? (
               <Text>Error...</Text>
             ) : (
@@ -100,11 +105,10 @@ const HomeScreen = () => {
                 ListFooterComponentStyle={{ justifyContent: 'center' }}
               />
             )}
-          </Layout>
+          </View>
 
           {!loggedIn ? (
-            <Layout
-              level="2"
+            <View
               style={{
                 height: 80,
                 justifyContent: 'center',
@@ -122,14 +126,13 @@ const HomeScreen = () => {
                 title="Account Setup">
                 Account Setup
               </Button>
-            </Layout>
+            </View>
           ) : null}
 
           {
             //Popular Anime
           }
-          <Layout
-            level="2"
+          <View
             style={{
               height: 230,
               marginBottom: 25,
@@ -140,14 +143,14 @@ const HomeScreen = () => {
               Popular Animes
             </Text>
             {popularLoading ? (
-              <Layout
+              <View
                 style={{
                   flex: 1,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Spinner />
-              </Layout>
+                <ActivityIndicator />
+              </View>
             ) : popularError ? (
               <Text>Error...</Text>
             ) : (
@@ -176,12 +179,11 @@ const HomeScreen = () => {
                 />
               </>
             )}
-          </Layout>
+          </View>
           {
             //Top 100
           }
-          <Layout
-            level="2"
+          <View
             style={{
               height: 230,
               marginBottom: 25,
@@ -191,14 +193,14 @@ const HomeScreen = () => {
             <Text style={{ marginLeft: 20, marginBottom: 10 }}>Top Animes</Text>
 
             {topLoading ? (
-              <Layout
+              <View
                 style={{
                   flex: 1,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Spinner />
-              </Layout>
+                <ActivityIndicator />
+              </View>
             ) : topError ? (
               <Text>Error...</Text>
             ) : (
@@ -227,8 +229,8 @@ const HomeScreen = () => {
                 />
               </>
             )}
-          </Layout>
-        </Layout>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

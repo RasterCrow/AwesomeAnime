@@ -1,11 +1,10 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 
-import { Text, Layout } from '@ui-kitten/components';
 const GenreTag = ({ genre }) => {
   return (
     <TouchableOpacity style={{ marginLeft: 5, marginRight: 5 }}>
-      <Layout>
+      <View>
         <Text
           style={{
             minWidth: 60,
@@ -18,7 +17,7 @@ const GenreTag = ({ genre }) => {
           }}>
           {String(genre).toUpperCase()}
         </Text>
-      </Layout>
+      </View>
     </TouchableOpacity>
   );
 };

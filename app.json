@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "AwesomeAnime",
+    "name": "Awesome Anime for Anilist",
     "slug": "AwesomeAnime",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "anilistredirect"
   }
 }

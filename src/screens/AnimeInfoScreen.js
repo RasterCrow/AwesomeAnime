@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, ScrollView, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import AnilistService from '../services/anilist';
 import { Colors } from '../defaults';
 import { useQuery } from '@apollo/client/';
-import { Text, Layout } from '@ui-kitten/components';
 import GenreTag from '../components/AnimeInfo/GenreTag';
 //import {LinearGradient} from 'react-native-linear-gradient';
 
@@ -29,7 +28,7 @@ const AnimeInfoScreen = ({ route }) => {
   console.log(data);
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Layout level="1">
+      <View>
         <ScrollView style={{ marginHorizontal: 0 }}>
           {/* Background Header image */}
           <Image
@@ -46,7 +45,7 @@ const AnimeInfoScreen = ({ route }) => {
           />
 
           {/* Header */}
-          <Layout
+          <View
             style={{
               flexDirection: 'row',
               height: 200,
@@ -64,7 +63,7 @@ const AnimeInfoScreen = ({ route }) => {
               }}
               source={{ uri: data.Media.coverImage.extraLarge }}
             />
-            <Layout
+            <View
               style={{
                 flexDirection: 'column',
                 height: '100%',
@@ -79,7 +78,7 @@ const AnimeInfoScreen = ({ route }) => {
                 }}>
                 {data.Media.title.english}
               </Text>
-              <Layout
+              <View
                 style={{
                   flexDirection: 'row',
                   height: 10,
@@ -93,12 +92,12 @@ const AnimeInfoScreen = ({ route }) => {
                   {String(data.Media.status).charAt(0) +
                     String(data.Media.status).substring(1).toLowerCase()}
                 </Text>
-              </Layout>
-            </Layout>
-          </Layout>
+              </View>
+            </View>
+          </View>
 
           {/* Body */}
-          <Layout style={{ marginTop: 30, paddingLeft: 5, paddingRight: 5 }}>
+          <View style={{ marginTop: 30, paddingLeft: 5, paddingRight: 5 }}>
             {/* Description */}
             <Text
               style={{
@@ -111,7 +110,7 @@ const AnimeInfoScreen = ({ route }) => {
               {data.Media.description}
             </Text>
             {/* Tags List */}
-            <Layout
+            <View
               style={{
                 marginTop: 10,
                 flexDirection: 'row',
@@ -125,10 +124,10 @@ const AnimeInfoScreen = ({ route }) => {
                   return <GenreTag key={item} genre={item} />;
                 })}
               </ScrollView>
-            </Layout>
-          </Layout>
+            </View>
+          </View>
         </ScrollView>
-      </Layout>
+      </View>
     </SafeAreaView>
   );
 };

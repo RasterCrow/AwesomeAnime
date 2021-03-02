@@ -1,4 +1,4 @@
-import {gql} from '@apollo/client';
+import { gql } from '@apollo/client';
 const baseUrl = 'https://graphql.anilist.co';
 
 //Find a way to pass sort as argument, so that all these functiosn can become one

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import {
-  TouchableOpacity,
   FlatList,
   View,
   StyleSheet,
-  Image,
-  ImageBackground,
+  ActivityIndicator,
+  Button,
+  Text,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AnilistService from '../services/anilist';
 import AnimeItemList from './AnimeItemList';
 import { Colors } from '../defaults';
 import { useQuery } from '@apollo/client';
-import { Spinner, Button, Text, Layout } from '@ui-kitten/components';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -43,20 +42,20 @@ const AnimeListScreen = () => {
   if (loading)
     return (
       <View style={styles.loading}>
-        <Spinner />
+        <ActivityIndicator />
       </View>
     );
   if (error) return <Text>Error...</Text>;
 
   return (
     <SafeAreaView>
-      <Layout level="1">
+      <View>
         <Button
           style={styles.button}
           onPress={() => navigation.navigate('Home')}>
           Go Home
         </Button>
-        <Layout level="1" style={{ marginBottom: 100, marginTop: 20 }}>
+        <View style={{ marginBottom: 100, marginTop: 20 }}>
           {animeList.length != 0 ? (
             <FlatList
               data={animeList}
@@ -95,16 +94,16 @@ const AnimeListScreen = () => {
             />
           ) : (
             <View style={styles.loading}>
-              <Spinner />
+              <ActivityIndicator />
             </View>
           )}
           {loadingMoreData && (
             <View style={styles.loading}>
-              <Spinner />
+              <ActivityIndicator />
             </View>
           )}
-        </Layout>
-      </Layout>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
